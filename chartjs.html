@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitoramento de Temperatura e Umidade</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f5f1f9;
+        color: #2d2d2d;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .painel {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+      }
+
+      .bloco {
+        flex: 1;
+        min-width: 0;
+        max-width: 650px;
+      }
+
+      .bloco h2 {
+        font-size: 17px;
+        text-align: center;
+        margin-top: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Monitoramento de Temperatura e Umidade</h1>
+    </header>
+
+    <main class="painel">
+      <section class="bloco">
+        <h2>Variação ao longo do dia</h2>
+        <canvas id="graficoDia"></canvas>
+      </section>
+
+      <section class="bloco">
+        <h2>Médias mensais</h2>
+        <canvas id="graficoMes"></canvas>
+      </section>
+    </main>
+
+    <script>
+      const horas = ["12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
+
+      const dadosDia = {
+        labels: horas,
+        datasets: [
+          {
+            label: "Temperatura (°C)",
+            data: [30, 29, 28, 25, 22, 23],
+            borderColor: "#b79ad6",
+            backgroundColor: "#b79ad6",
+            borderWidth: 4, 
+          },
+          {
+            label: "Umidade (%)",
+            data: [80, 82, 80, 85, 80, 83],
+            borderColor: "#4B0082",
+            backgroundColor: "#4B0082",
+            borderWidth: 4,
+          },
+        ],
+      };
+
+      const configDia = {
+        type: "line",
+        data: dadosDia,
+        options: {
+          scales: { y: { beginAtZero: true } },
+        },
+      };
+
+      new Chart(document.getElementById("graficoDia"), configDia);
+
+      const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho"];
+
+      const dadosMes = {
+        labels: meses,
+        datasets: [
+          {
+            label: "Temperatura média (°C)",
+            data: [22, 24, 27, 23, 20, 18],
+            backgroundColor: "#9370DB",
+          },
+          {
+            label: "Umidade média (%)",
+            data: [90, 89, 93, 87, 88, 82],
+            backgroundColor: "#4B0082",
+          },
+        ],
+      };
+
+      const configMes = {
+        type: "bar",
+        data: dadosMes,
+        options: {
+          scales: { y: { beginAtZero: true } },
+        },
+      };
+
+      new Chart(document.getElementById("graficoMes"), configMes);
+    </script>
+  </body>
+</html>
